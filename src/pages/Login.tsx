@@ -5,11 +5,13 @@ import { loginApi } from "../config/baseUrl";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/slicess/authSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+
 
 const Login = () => {
 
-  const dispatch=useDispatch()
-  const navigate =useNavigate()
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const {
     handleSubmit,
     control,
@@ -30,13 +32,14 @@ const Login = () => {
     try {
       const response = await loginApi(formData)
       if (response?.status === 200) {
-        dispatch(setToken({token: response?.data?.access_token}))
+        dispatch(setToken({ token: response?.data?.access_token }))
         navigate('/')
+        toast.success("Login Successful!")
 
       }
     } catch (error) {
       console.log(error);
-
+      toast.error("Login failed. Please try again.");
     }
 
   };
@@ -187,24 +190,15 @@ const Login = () => {
                   }}
                 >
                   <Button
-                    type="submit"
-                    variant="outlined"
-                    sx={{
-                      color: "primary.main",
-                      border: "1px solid",
-                      borderColor: "primary.main",
-                      "&:hover": {
-                        borderColor: "primary.dark",
-                        backgroundColor: "primary.light",
-                      },
-                    }}
+                    type="submit" variant="contained" color="primary"
+
                   >
                     Login
                   </Button>
                   <Typography
                     sx={{
                       color: "primary.main",
-                      fontWeight: "bold",
+                      cursor: 'pointer'
                     }}
                   >
                     Forgot Password

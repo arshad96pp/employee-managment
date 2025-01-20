@@ -12,6 +12,8 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AddEmployeeApi } from "../config/baseUrl";
 import AddEmployeeForm from "../components/forms/AddEmployeeForm";
+import { toast } from 'react-toastify';
+
 
 const AddEmployee = () => {
   const { control, handleSubmit, reset, formState: { errors } } = useForm();
@@ -99,12 +101,15 @@ const AddEmployee = () => {
 
       if (response?.status) {
         navigate('/EmployeeList');
-        reset();
+        toast.success('Employee added successfully!')
+        // reset();
       } else {
         console.log('Response error:', response);
       }
     } catch (error) {
       console.error('API call error:', error);
+      toast.error('Failed to add employee. Please try again.')
+
     } finally {
       setLoading(false); // Hide the loader after the request finishes
     }

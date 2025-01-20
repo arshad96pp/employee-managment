@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { useSelector } from 'react-redux'
 import { AddDesignationApi } from '../config/baseUrl'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify';
+
 
 const AddDesignation = () => {
   const [designationsValue, setDesignationsValue] = useState('')
@@ -19,13 +21,17 @@ const AddDesignation = () => {
     const data = {
       designation_name: designationsValue
     }
-    const response = await AddDesignationApi(data, token)
-    if (response?.status === 200) {
-      setDesignationsValue('')
-      navigate('/designationList')
-    } else {
-      console.log('des', response);
-
+   
+    try {
+      const response = await AddDesignationApi(data, token)
+      if (response?.status === 200) {
+        setDesignationsValue('')
+        toast.success('Destination added successfully!')
+        navigate('/designationList')
+      } 
+    } catch (error) {
+      console.log('error', error);
+      toast.error('Failed to add destination. Please try again.')
     }
 
   }

@@ -14,11 +14,13 @@ import { registerApi } from "../config/baseUrl";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/slicess/authSlice";
 import { useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+
 
 
 const Register = () => {
   const dispatch = useDispatch()
-  const navigate =useNavigate()
+  const navigate = useNavigate()
 
   // Using react-hook-form
   const {
@@ -43,11 +45,15 @@ const Register = () => {
       if (response?.status === 200) {
         dispatch(setToken({ token: response?.data?.access_token }))
         navigate('/')
+        toast.success("Registration Successful!");
+
       }
 
       console.log("API Response:", response);
     } catch (error) {
       console.error("Error submitting form:", error);
+      toast.error("Registration failed. Please try again.");
+
     }
   };
 

@@ -28,7 +28,7 @@ const AddEmployeeForm = ({ config }: any) => {
                     alignItems="center"
                     key={field.name}
                     sx={{
-                        marginBottom: "8px",
+                        marginBottom: "23px",
                         display: "grid",
                         gridTemplateColumns: "1fr 2fr",
                     }}
@@ -71,7 +71,7 @@ const AddEmployeeForm = ({ config }: any) => {
                 spacing={2}
                 alignItems="center"
                 sx={{
-                    marginBottom: "8px",
+                    marginBottom: "23px",
                     display: "grid",
                     gridTemplateColumns: "1fr 2fr",
                 }}
@@ -114,7 +114,7 @@ const AddEmployeeForm = ({ config }: any) => {
                 spacing={2}
                 alignItems="center"
                 sx={{
-                    marginBottom: "8px",
+                    marginBottom: "23px",
                     display: "grid",
                     gridTemplateColumns: "1fr 2fr",
                 }}
@@ -157,7 +157,7 @@ const AddEmployeeForm = ({ config }: any) => {
                 spacing={2}
                 alignItems="center"
                 sx={{
-                    marginBottom: "8px",
+                    marginBottom: "23px",
                     display: "grid",
                     gridTemplateColumns: "1fr 2fr",
                 }}
@@ -206,7 +206,7 @@ const AddEmployeeForm = ({ config }: any) => {
                 spacing={2}
                 alignItems="center"
                 sx={{
-                    marginBottom: "8px",
+                    marginBottom: "23px",
                     display: "grid",
                     gridTemplateColumns: "1fr 2fr",
                 }}
@@ -254,7 +254,7 @@ const AddEmployeeForm = ({ config }: any) => {
                 spacing={2}
                 alignItems="center"
                 sx={{
-                    marginBottom: "8px",
+                    marginBottom: "23px",
                     display: "grid",
                     gridTemplateColumns: "1fr 2fr",
                 }}
@@ -301,7 +301,7 @@ const AddEmployeeForm = ({ config }: any) => {
                 spacing={2}
                 alignItems="center"
                 sx={{
-                    marginBottom: "8px",
+                    marginBottom: "23px",
                     display: "grid",
                     gridTemplateColumns: "1fr 2fr",
                 }}
@@ -349,7 +349,7 @@ const AddEmployeeForm = ({ config }: any) => {
                 spacing={2}
                 alignItems="center"
                 sx={{
-                    marginBottom: "8px",
+                    marginBottom: "23px",
                     display: "grid",
                     gridTemplateColumns: "1fr 2fr",
                 }}
@@ -392,7 +392,7 @@ const AddEmployeeForm = ({ config }: any) => {
             </Grid>
 
             {/* Action Buttons */}
-            <Box sx={{ display: "flex", justifyContent: "start", gap: 2 }}>
+            <Box sx={{ display: "flex", justifyContent: "start", gap: 2,marginTop:'20px' }}>
                 <Button
                     type="submit"
                     variant="outlined"

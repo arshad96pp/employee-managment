@@ -13,15 +13,21 @@ import {
   ListItemButton,
   ListItemText,
   Avatar,
+  Popover,
+  MenuItem,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { logout } from "../../redux/slicess/authSlice";
 
 const Header = () => {
   const { isLoggedIn } = useSelector((state: any) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [activePath, setActivePath] = useState("/");
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const toggleDrawer = (open: boolean) => {
     setDrawerOpen(open);
@@ -32,11 +38,39 @@ const Header = () => {
       { text: "Home", path: "/" },
       { text: "Employees", path: "/EmployeeList" },
       { text: "Designations", path: "/designationList" },
+      { text: "Logout", path: "/logout" }, // Add logout item for drawer
     ]
     : [
       { text: "Login", path: "/" },
       { text: "Register", path: "/register" },
     ];
+
+  const handleNavigation = (path: string) => {
+    setActivePath(path);
+    navigate(path);
+    if (path === "/logout") {
+      handleLogout(); // Logout if the user clicks "Logout"
+    }
+  };
+
+  const handleLogout = () => {
+    // Handle logout logic (clear session or token)
+    console.log("Logging out...");
+    dispatch(logout());
+    navigate("/"); // Redirect to home or login page
+    setDrawerOpen(false); // Close drawer on mobile after logout
+  };
+
+  const handleAvatarHover = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleAvatarLeave = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "avatar-popover" : undefined;
 
   return (
     <Box>
@@ -58,7 +92,7 @@ const Header = () => {
             <Box
               sx={{
                 flexGrow: 1,
-                display: { xs: "none", md: "flex" },
+                display: { xs: isLoggedIn? "none":'', md: "flex" },
                 alignItems: "center",
                 gap: 2,
               }}
@@ -67,34 +101,64 @@ const Header = () => {
                 {isLoggedIn ? "Admin Template" : "Employee Manager"}
               </Typography>
               {isLoggedIn &&
-                menuItems.map((item) => (
+                menuItems.slice(0, -1).map((item) => (
                   <Button
                     key={item.text}
                     color="inherit"
-                    onClick={() => navigate(item.path)}
+                    onClick={() => handleNavigation(item.path)}
+                    sx={{
+                      color: activePath === item.path ? "white" : "gray",
+                      "&:hover": {
+                        color: "white",
+                      },
+                    }}
                   >
                     {item.text}
                   </Button>
                 ))}
             </Box>
 
-            {/* Welcome Message or Authentication Buttons */}
+            {/* Welcome Message, Avatar, and Logout Button */}
             <Box
               sx={{
-                display: { xs: "none", md: "flex" },
+                display: { xs: isLoggedIn? "none":'', md: "flex" },
                 alignItems: "center",
                 gap: 2,
               }}
             >
               {isLoggedIn ? (
-                <Box sx={{ display: "flex", justifyItems: 'start', alignItems: "center", gap: '10px' }}>
-                  <Typography sx={{ fontSize: '14px' }}>Welcome Muhammed Shafi P</Typography>
+                <Box
+                  sx={{ display: "flex", alignItems: "center", gap: "10px" }}
+                  onMouseEnter={handleAvatarHover}
+                  onMouseLeave={handleAvatarLeave}
+                >
+                  <Typography sx={{ fontSize: "14px" }}>Welcome Muhammed Shafi P</Typography>
 
                   <Avatar
                     alt="User Avatar"
                     src="https://via.placeholder.com/150" // Placeholder image URL
                     sx={{ width: 40, height: 40, mr: 1 }}
                   />
+
+                  {/* Popover (Dropdown Menu) */}
+                  <Popover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleAvatarLeave}
+                    anchorOrigin={{
+                      vertical: "bottom",
+                      horizontal: "center",
+                    }}
+                    transformOrigin={{
+                      vertical: "top",
+                      horizontal: "center",
+                    }}
+                  >
+                    <Box sx={{ width: 200 }}>
+                      <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                    </Box>
+                  </Popover>
                 </Box>
               ) : (
                 <>
@@ -150,7 +214,17 @@ const Header = () => {
           <List>
             {menuItems.map((item) => (
               <ListItem key={item.text} disablePadding>
-                <ListItemButton onClick={() => navigate(item.path)}>
+                <ListItemButton
+                  onClick={() => handleNavigation(item.path)}
+                  sx={{
+                    color: activePath === item.path ? "white" : "gray",
+                    backgroundColor: activePath === item.path ? "#333" : "transparent",
+                    "&:hover": {
+                      color: "white",
+                      backgroundColor: "#333",
+                    },
+                  }}
+                >
                   <ListItemText primary={item.text} />
                 </ListItemButton>
               </ListItem>
