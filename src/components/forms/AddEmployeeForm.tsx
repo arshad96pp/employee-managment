@@ -302,101 +302,115 @@ const AddEmployeeForm = ({ config }: any) => {
         </Grid>
       </Grid>
 
-      {/* Profile Picture Upload */}
-      <Grid
-        container
-        spacing={2}
-        alignItems="center"
-        sx={{
-          marginBottom: "23px",
-          display: "grid",
-          gridTemplateColumns: "1fr 2fr",
-        }}
-      >
-        <Grid item>
-          <Typography>Profile Picture</Typography>
-        </Grid>
-        <Grid item>
-          <Controller
-            name="profile_pic"
-            control={control}
-            rules={{ required: "Profile Picture is required" }}
-            defaultValue=""
-            render={({ field }) => (
-              <>
-                <TextField
-                  {...field}
-                  fullWidth
-                  type="file"
-                  inputProps={{ accept: "image/*" }} // Accept images only
-                  variant="outlined"
-                  onChange={(e) => {
-                    field.onChange(e); // Update React Hook Form state with file
-                    handleFileChange(e); // Handle file changes (optional)
-                  }}
-                />
-                {errors.profile_pic && (
-                  <Typography
-                    variant="body2"
-                    color="error"
-                    sx={{ marginTop: "4px" }}
-                  >
-                    {errors.profile_pic?.message}
-                  </Typography>
-                )}
-              </>
-            )}
-          />
-        </Grid>
-      </Grid>
 
-      {/* Resume Upload */}
-      <Grid
-        container
-        spacing={2}
-        alignItems="center"
-        sx={{
-          marginBottom: "23px",
-          display: "grid",
-          gridTemplateColumns: "1fr 2fr",
-        }}
-      >
-        <Grid item>
-          <Typography>Resume</Typography>
-        </Grid>
-        <Grid item>
-          <Controller
-            name="resume"
-            control={control}
-            rules={{ required: "Resume is required" }}
-            defaultValue=""
-            render={({ field }) => (
-              <>
-                <TextField
-                  {...field}
-                  fullWidth
-                  type="file"
-                  inputProps={{ accept: ".pdf,.doc,.docx" }}
-                  variant="outlined"
-                  onChange={(e) => {
-                    field.onChange(e); // Update React Hook Form state with file
-                    handlePdfChange(e); // Handle file changes (optional)
-                  }}
-                />
-                {errors.resume && (
-                  <Typography
-                    variant="body2"
-                    color="error"
-                    sx={{ marginTop: "4px" }}
-                  >
-                    {errors.resume?.message}
-                  </Typography>
-                )}
-              </>
-            )}
+      {/* Profile Picture Upload */}
+<Grid
+  container
+  spacing={2}
+  alignItems="center"
+  sx={{
+    marginBottom: "23px",
+    display: "grid",
+    gridTemplateColumns: "1fr 2fr",
+  }}
+>
+  <Grid item>
+    <Typography>Profile Picture</Typography>
+  </Grid>
+  <Grid item>
+    <Controller
+      name="profile_pic"
+      control={control}
+      rules={{ required: "Profile Picture is required" }}
+      render={({ field }) => (
+        <>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files[0]; // Get the selected file
+              field.onChange(file); // Update the React Hook Form state
+              handleFileChange(e); // Optional: Handle additional logic
+            }}
+            style={{
+              display: "block",
+              width: "100%",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              backgroundColor: "#fff",
+            }}
           />
-        </Grid>
-      </Grid>
+          {errors.profile_pic && (
+            <Typography
+              variant="body2"
+              color="error"
+              sx={{ marginTop: "4px" }}
+            >
+              {errors.profile_pic?.message}
+            </Typography>
+          )}
+        </>
+      )}
+    />
+  </Grid>
+</Grid>
+
+{/* Resume Upload */}
+<Grid
+  container
+  spacing={2}
+  alignItems="center"
+  sx={{
+    marginBottom: "23px",
+    display: "grid",
+    gridTemplateColumns: "1fr 2fr",
+  }}
+>
+  <Grid item>
+    <Typography>Resume</Typography>
+  </Grid>
+  <Grid item>
+    <Controller
+      name="resume"
+      control={control}
+      rules={{ required: "Resume is required" }}
+      render={({ field }) => (
+        <>
+          <input
+            type="file"
+            accept=".pdf,.doc,.docx"
+            onChange={(e) => {
+              const file = e.target.files[0]; // Get the selected file
+              field.onChange(file); // Update the React Hook Form state
+              handlePdfChange(e); // Optional: Handle additional logic
+            }}
+            style={{
+              display: "block",
+              width: "100%",
+              padding: "10px",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+              backgroundColor: "#fff",
+            }}
+          />
+          {errors.resume && (
+            <Typography
+              variant="body2"
+              color="error"
+              sx={{ marginTop: "4px" }}
+            >
+              {errors.resume?.message}
+            </Typography>
+          )}
+        </>
+      )}
+    />
+  </Grid>
+</Grid>
+
+
+   
 
       {/* Action Buttons */}
       <Box

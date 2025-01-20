@@ -42,7 +42,20 @@ const AddEmployee = () => {
     }
   };
 
+  const validateFormData = (data: any): boolean => {
+    if (!data.first_name || !data.last_name || !data.email) {
+      toast.error("Please fill in all required fields.");
+      return false;
+    }
+    if (!/^\S+@\S+\.\S+$/.test(data.email)) {
+      toast.error("Invalid email address.");
+      return false;
+    }
+    return true;
+  };
+
   const onSubmit = async (data: any) => {
+    if (!validateFormData(data)) return;
     const {
       first_name,
       last_name,
@@ -51,7 +64,6 @@ const AddEmployee = () => {
       gender,
       designation,
       status,
-      profile_pic,
       resume,
       address,
       date_of_birth,
@@ -60,7 +72,7 @@ const AddEmployee = () => {
     // Log file details
     console.log("File details:", fileDetails);
 
-    const item = {
+    const item: Record<string, any> = {
       first_name,
       last_name,
       mobile_number,
@@ -83,7 +95,9 @@ const AddEmployee = () => {
 
     // Append other fields dynamically
     Object.keys(item).forEach((key) => {
-      formData.append(key, item[key]);
+      if (item[key] !== undefined && item[key] !== null) {
+        formData.append(key, item[key].toString());
+      }
     });
 
     // Append profile pic as a file if it exists
@@ -103,16 +117,38 @@ const AddEmployee = () => {
       const response = await AddEmployeeApi(formData, token);
       console.log("response", response);
 
-      if (response?.status) {
-        navigate("/EmployeeList");
-        toast.success("Employee added successfully!");
-        // reset();
-      } else {
-        console.log("Response error:", response);
+      if (response?.status !== 201) {
+        throw new Error(`Unexpected response status: ${response?.status}`);
       }
-    } catch (error) {
+
+      navigate("/EmployeeList");
+      toast.success("Employee added successfully!");
+      // reset();
+    } catch (error:any) {
       console.error("API call error:", error);
-      toast.error("Failed to add employee. Please try again.");
+
+      if (error.response) {
+        const { errors } = error.response.data;
+
+        console.log("Errors:", errors); // Log specific errors
+
+        // Get the first error message from the `errors` object
+        const firstError = Object.keys(errors)
+          .map((field) => errors[field][0]) // Extract the first message for each field
+          .find((message) => message); // Find the first non-empty message
+
+        if (firstError) {
+          toast.error(firstError); // Show the error in a toast notification
+        }
+
+        // Optional: Log each field error if needed
+        Object.keys(errors).forEach((field) => {
+          console.log(`${field}:`, errors[field].join(", "));
+        });
+      } else {
+        toast.error("An unexpected error occurred");
+        console.error("An unexpected error occurred:", error.message);
+      }
     } finally {
       setLoading(false); // Hide the loader after the request finishes
     }
