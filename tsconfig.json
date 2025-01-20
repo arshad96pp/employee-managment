@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "composite": true, // Required for project references
+    "outDir": "./dist", // Output directory for compiled files
+    "rootDir": "./src", // Root directory for source files
+    "moduleResolution": "node",
+    "strict": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "jsx": "react-jsx", // If you're using React 17+ with the new JSX transform
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "files": [],
+  "references": [
+    { "path": "./tsconfig.app.json" },
+    { "path": "./tsconfig.node.json" }
+  ]
+}
