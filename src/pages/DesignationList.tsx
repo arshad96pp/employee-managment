@@ -27,8 +27,7 @@ import { baseUrl } from "../config/baseUrl";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader/Loader";
-import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
-
+import SentimentDissatisfiedIcon from "@mui/icons-material/SentimentDissatisfied";
 
 // Fetch Designations API function
 const fetchDesignationData = async (token: string) => {
@@ -72,8 +71,8 @@ const DesignationList = () => {
   // Filter rows based on search query
   const filteredData = Array.isArray(data)
     ? data.filter((row: any) =>
-      row?.name?.toLowerCase()?.includes(searchQuery.toLowerCase())
-    )
+        row?.name?.toLowerCase()?.includes(searchQuery.toLowerCase())
+      )
     : [];
 
   // Extract paginated rows based on the current page and rowsPerPage
@@ -182,9 +181,7 @@ const DesignationList = () => {
                         },
                       }}
                     >
-                      <TableCell>
-                        {page * rowsPerPage + index + 1}
-                      </TableCell>
+                      <TableCell>{page * rowsPerPage + index + 1}</TableCell>
                       <TableCell>{row.name}</TableCell>
                       <TableCell>
                         <IconButton
@@ -214,35 +211,36 @@ const DesignationList = () => {
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </>
-        ) : <Box sx={{ textAlign: 'center', marginTop: 2 }}>
-          <SentimentDissatisfiedIcon color="action" sx={{ fontSize: 40 }} />
-          <Typography variant="h6" align="center" sx={{ marginTop: 1 }}>
-            No data available
-          </Typography>
-        </Box>}
-
+        ) : (
+          <Box sx={{ textAlign: "center", marginTop: 2 }}>
+            <SentimentDissatisfiedIcon color="action" sx={{ fontSize: 40 }} />
+            <Typography variant="h6" align="center" sx={{ marginTop: 1 }}>
+              No data available
+            </Typography>
+          </Box>
+        )}
 
         {/* Delete Modal */}
         <Dialog open={isDeleteModalOpen} onClose={closeDeleteModal}>
           <DialogTitle>Confirm Deletion</DialogTitle>
           <DialogContent>
-            Are you sure you want to delete{" "}
-            <strong>{selectedRow?.name}</strong>?
+            Are you sure you want to delete <strong>{selectedRow?.name}</strong>
+            ?
           </DialogContent>
           <DialogActions>
             <Button onClick={closeDeleteModal}>Cancel</Button>
-            <Button
-              onClick={handleDelete}
-              variant="contained"
-              color="error"
-            >
+            <Button onClick={handleDelete} variant="contained" color="error">
               Delete
             </Button>
           </DialogActions>
         </Dialog>
 
         {/* Edit Modal */}
-        <Dialog open={isEditModalOpen} onClose={closeEditModal} sx={{ padding: 7 }}>
+        <Dialog
+          open={isEditModalOpen}
+          onClose={closeEditModal}
+          sx={{ padding: 7 }}
+        >
           <DialogTitle>Edit Designation</DialogTitle>
           <DialogContent>
             <MUITextField

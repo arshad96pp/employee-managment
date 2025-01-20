@@ -35,15 +35,15 @@ const Header = () => {
 
   const menuItems = isLoggedIn
     ? [
-      { text: "Home", path: "/" },
-      { text: "Employees", path: "/EmployeeList" },
-      { text: "Designations", path: "/designationList" },
-      { text: "Logout", path: "/logout" }, // Add logout item for drawer
-    ]
+        { text: "Home", path: "/" },
+        { text: "Employees", path: "/EmployeeList" },
+        { text: "Designations", path: "/designationList" },
+        { text: "Logout", path: "/logout" }, // Add logout item for drawer
+      ]
     : [
-      { text: "Login", path: "/" },
-      { text: "Register", path: "/register" },
-    ];
+        { text: "Login", path: "/" },
+        { text: "Register", path: "/register" },
+      ];
 
   const handleNavigation = (path: string) => {
     setActivePath(path);
@@ -74,7 +74,10 @@ const Header = () => {
 
   return (
     <Box>
-      <AppBar position="static" style={{ background: isLoggedIn ? "#333" : "white" }}>
+      <AppBar
+        position="static"
+        style={{ background: isLoggedIn ? "#333" : "white" }}
+      >
         <Container maxWidth="lg">
           <Toolbar style={{ padding: 0 }}>
             {/* Hamburger Menu for Small Screens */}
@@ -92,12 +95,15 @@ const Header = () => {
             <Box
               sx={{
                 flexGrow: 1,
-                display: { xs: isLoggedIn? "none":'', md: "flex" },
+                display: { xs: isLoggedIn ? "none" : "", md: "flex" },
                 alignItems: "center",
                 gap: 2,
               }}
             >
-              <Typography variant="h6" sx={{ color: isLoggedIn ? "white" : "black" }}>
+              <Typography
+                variant="h6"
+                sx={{ color: isLoggedIn ? "white" : "black" }}
+              >
                 {isLoggedIn ? "Admin Template" : "Employee Manager"}
               </Typography>
               {isLoggedIn &&
@@ -121,7 +127,7 @@ const Header = () => {
             {/* Welcome Message, Avatar, and Logout Button */}
             <Box
               sx={{
-                display: { xs: isLoggedIn? "none":'', md: "flex" },
+                display: { xs: isLoggedIn ? "none" : "", md: "flex" },
                 alignItems: "center",
                 gap: 2,
               }}
@@ -132,7 +138,9 @@ const Header = () => {
                   onMouseEnter={handleAvatarHover}
                   onMouseLeave={handleAvatarLeave}
                 >
-                  <Typography sx={{ fontSize: "14px" }}>Welcome Muhammed Shafi P</Typography>
+                  <Typography sx={{ fontSize: "14px" }}>
+                    Welcome Muhammed Shafi P
+                  </Typography>
 
                   <Avatar
                     alt="User Avatar"
@@ -183,7 +191,11 @@ const Header = () => {
         </Container>
       </AppBar>
 
-      <Drawer anchor="left" open={drawerOpen} onClose={() => toggleDrawer(false)}>
+      <Drawer
+        anchor="left"
+        open={drawerOpen}
+        onClose={() => toggleDrawer(false)}
+      >
         <Box
           sx={{
             width: 250,
@@ -218,7 +230,8 @@ const Header = () => {
                   onClick={() => handleNavigation(item.path)}
                   sx={{
                     color: activePath === item.path ? "white" : "gray",
-                    backgroundColor: activePath === item.path ? "#333" : "transparent",
+                    backgroundColor:
+                      activePath === item.path ? "#333" : "transparent",
                     "&:hover": {
                       color: "white",
                       backgroundColor: "#333",

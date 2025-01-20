@@ -1,47 +1,49 @@
 import React from "react";
-import { Box, Container, Card, Typography, Divider, Button, Grid, TextField, FormControlLabel, Checkbox } from "@mui/material";
+import {
+  Box,
+  Container,
+  Card,
+  Typography,
+  Divider,
+  Button,
+  Grid,
+  TextField,
+  FormControlLabel,
+  Checkbox,
+} from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { loginApi } from "../config/baseUrl";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/slicess/authSlice";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-
+import { toast } from "react-toastify";
 
 const Login = () => {
-
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm();
 
-
-
-
-
   // Submit handler
   const onSubmit = async (data: any) => {
     const formData = new FormData();
-    formData.append('email', data?.email);
-    formData.append('password', data?.password);
-
+    formData.append("email", data?.email);
+    formData.append("password", data?.password);
 
     try {
-      const response = await loginApi(formData)
+      const response = await loginApi(formData);
       if (response?.status === 200) {
-        dispatch(setToken({ token: response?.data?.access_token }))
-        navigate('/')
-        toast.success("Login Successful!")
-
+        dispatch(setToken({ token: response?.data?.access_token }));
+        navigate("/");
+        toast.success("Login Successful!");
       }
     } catch (error) {
       console.log(error);
       toast.error("Login failed. Please try again.");
     }
-
   };
 
   return (
@@ -97,7 +99,12 @@ const Login = () => {
             }}
           >
             {/* Row 1: E-mail Address */}
-            <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2 }}>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              sx={{ marginBottom: 2 }}
+            >
               <Grid item xs={12} sm={4} display="flex" justifyContent="end">
                 <Typography>E-mail Address</Typography>
               </Grid>
@@ -109,7 +116,8 @@ const Login = () => {
                   rules={{
                     required: "Email is required",
                     pattern: {
-                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                      value:
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
                       message: "Invalid email address",
                     },
                   }}
@@ -128,7 +136,12 @@ const Login = () => {
             </Grid>
 
             {/* Row 2: Password */}
-            <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2 }}>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              sx={{ marginBottom: 2 }}
+            >
               <Grid item xs={12} sm={4} display="flex" justifyContent="end">
                 <Typography>Password</Typography>
               </Grid>
@@ -152,7 +165,9 @@ const Login = () => {
                       type="password"
                       placeholder="Enter your password"
                       error={!!errors.password}
-                      helperText={errors.password ? errors.password.message : ""}
+                      helperText={
+                        errors.password ? errors.password.message : ""
+                      }
                     />
                   )}
                 />
@@ -160,7 +175,12 @@ const Login = () => {
             </Grid>
 
             {/* Row 3: Remember Me */}
-            <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2 }}>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              sx={{ marginBottom: 2 }}
+            >
               <Grid item xs={12} sm={4}></Grid>
               <Grid item xs={12} sm={8}>
                 <FormControlLabel
@@ -177,7 +197,12 @@ const Login = () => {
               </Grid>
             </Grid>
 
-            <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2 }}>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              sx={{ marginBottom: 2 }}
+            >
               <Grid item xs={12} sm={4}></Grid>
               <Grid item xs={12} sm={8}>
                 {/* Buttons and Forgot Password */}
@@ -189,16 +214,13 @@ const Login = () => {
                     gap: "20px",
                   }}
                 >
-                  <Button
-                    type="submit" variant="contained" color="primary"
-
-                  >
+                  <Button type="submit" variant="contained" color="primary">
                     Login
                   </Button>
                   <Typography
                     sx={{
                       color: "primary.main",
-                      cursor: 'pointer'
+                      cursor: "pointer",
                     }}
                   >
                     Forgot Password
@@ -206,8 +228,6 @@ const Login = () => {
                 </Box>
               </Grid>
             </Grid>
-
-
           </Box>
         </Card>
       </Container>

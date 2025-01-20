@@ -14,13 +14,11 @@ import { registerApi } from "../config/baseUrl";
 import { useDispatch } from "react-redux";
 import { setToken } from "../redux/slicess/authSlice";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-
-
+import { toast } from "react-toastify";
 
 const Register = () => {
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   // Using react-hook-form
   const {
@@ -43,17 +41,15 @@ const Register = () => {
     try {
       const response = await registerApi(formData);
       if (response?.status === 200) {
-        dispatch(setToken({ token: response?.data?.access_token }))
-        navigate('/')
+        dispatch(setToken({ token: response?.data?.access_token }));
+        navigate("/");
         toast.success("Registration Successful!");
-
       }
 
       console.log("API Response:", response);
     } catch (error) {
       console.error("Error submitting form:", error);
       toast.error("Registration failed. Please try again.");
-
     }
   };
 
@@ -68,7 +64,6 @@ const Register = () => {
       >
         <Card
           sx={{
-
             width: 700,
             boxShadow: 3,
             borderRadius: "8px",
@@ -84,14 +79,17 @@ const Register = () => {
               background: "#f0f0f0",
             }}
           >
-            <Typography variant="h6" sx={{
-              fontSize: {
-                xs: '1rem',  // font size for extra small screens
-                sm: '1rem',    // font size for small screens
-                md: '1rem',  // font size for medium screens
-                lg: '1.2rem',    // font size for large screens
-              }
-            }}>
+            <Typography
+              variant="h6"
+              sx={{
+                fontSize: {
+                  xs: "1rem", // font size for extra small screens
+                  sm: "1rem", // font size for small screens
+                  md: "1rem", // font size for medium screens
+                  lg: "1.2rem", // font size for large screens
+                },
+              }}
+            >
               Register
             </Typography>
           </Box>
@@ -108,14 +106,23 @@ const Register = () => {
             }}
           >
             {/* Row 1: Name */}
-            <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2, marginTop: '4px' }}>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              sx={{ marginBottom: 2, marginTop: "4px" }}
+            >
               <Grid item xs={12} sm={4} display="flex" justifyContent="end">
-                <Typography sx={{
-                  fontSize: {
-                    // font size for medium screens
-                    lg: '0.9rem',    // font size for large screens
-                  }
-                }}>Name</Typography>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      // font size for medium screens
+                      lg: "0.9rem", // font size for large screens
+                    },
+                  }}
+                >
+                  Name
+                </Typography>
               </Grid>
               <Grid item xs={12} sm={8}>
                 <Controller
@@ -138,14 +145,23 @@ const Register = () => {
             </Grid>
 
             {/* Row 2: Email */}
-            <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2 }}>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              sx={{ marginBottom: 2 }}
+            >
               <Grid item xs={12} sm={4} display="flex" justifyContent="end">
-                <Typography sx={{
-                  fontSize: {
-                    // font size for medium screens
-                    lg: '0.9rem',    // font size for large screens
-                  }
-                }}>Email</Typography>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      // font size for medium screens
+                      lg: "0.9rem", // font size for large screens
+                    },
+                  }}
+                >
+                  Email
+                </Typography>
               </Grid>
               <Grid item xs={12} sm={8}>
                 <Controller
@@ -155,7 +171,8 @@ const Register = () => {
                   rules={{
                     required: "Email is required",
                     pattern: {
-                      value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                      value:
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
                       message: "Invalid email address",
                     },
                   }}
@@ -174,14 +191,23 @@ const Register = () => {
             </Grid>
 
             {/* Row 3: Password */}
-            <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2 }}>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              sx={{ marginBottom: 2 }}
+            >
               <Grid item xs={12} sm={4} display="flex" justifyContent="end">
-                <Typography sx={{
-                  fontSize: {
-                    // font size for medium screens
-                    lg: '0.9rem',    // font size for large screens
-                  }
-                }}>Password</Typography>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      // font size for medium screens
+                      lg: "0.9rem", // font size for large screens
+                    },
+                  }}
+                >
+                  Password
+                </Typography>
               </Grid>
               <Grid item xs={12} sm={8}>
                 <Controller
@@ -211,14 +237,23 @@ const Register = () => {
             </Grid>
 
             {/* Row 4: Confirm Password */}
-            <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2 }}>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              sx={{ marginBottom: 2 }}
+            >
               <Grid item xs={12} sm={4} display="flex" justifyContent="end">
-                <Typography sx={{
-                  fontSize: {
-                    // font size for medium screens
-                    lg: '0.9rem',    // font size for large screens
-                  }
-                }}>Confirm Password</Typography>
+                <Typography
+                  sx={{
+                    fontSize: {
+                      // font size for medium screens
+                      lg: "0.9rem", // font size for large screens
+                    },
+                  }}
+                >
+                  Confirm Password
+                </Typography>
               </Grid>
               <Grid item xs={12} sm={8}>
                 <Controller
@@ -228,7 +263,8 @@ const Register = () => {
                   rules={{
                     required: "Confirm Password is required",
                     validate: (value) =>
-                      value === control._formValues.password || "Passwords do not match",
+                      value === control._formValues.password ||
+                      "Passwords do not match",
                   }}
                   render={({ field }) => (
                     <TextField
@@ -242,15 +278,23 @@ const Register = () => {
                     />
                   )}
                 />
-
               </Grid>
             </Grid>
 
-            <Grid container spacing={2} alignItems="center" sx={{ marginBottom: 2 }}>
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              sx={{ marginBottom: 2 }}
+            >
               <Grid item xs={12} sm={4} display="flex" justifyContent="end">
-                <Typography sx={{
-                  opacity: '0'
-                }}>Confirm Password</Typography>
+                <Typography
+                  sx={{
+                    opacity: "0",
+                  }}
+                >
+                  Confirm Password
+                </Typography>
               </Grid>
               <Grid item xs={12} sm={8}>
                 {/* Submit Button */}
@@ -259,11 +303,8 @@ const Register = () => {
                     Register
                   </Button>
                 </Box>
-
               </Grid>
             </Grid>
-
-
           </Box>
         </Card>
       </Container>

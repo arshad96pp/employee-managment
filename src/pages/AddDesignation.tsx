@@ -1,53 +1,58 @@
-import { Box, Button, Card, Container, Divider, Typography } from '@mui/material'
-import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
-import { AddDesignationApi } from '../config/baseUrl'
-import { useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify';
-
+import {
+  Box,
+  Button,
+  Card,
+  Container,
+  Divider,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { AddDesignationApi } from "../config/baseUrl";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddDesignation = () => {
-  const [designationsValue, setDesignationsValue] = useState('')
-  const { token } = useSelector((state: any) => state.auth)
-  const navigate = useNavigate()
-
+  const [designationsValue, setDesignationsValue] = useState("");
+  const { token } = useSelector((state: any) => state.auth);
+  const navigate = useNavigate();
 
   const submitDesignation = async (e: any) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    if (designationsValue?.trim() === '') {
+    if (designationsValue?.trim() === "") {
       return;
     }
     const data = {
-      designation_name: designationsValue
-    }
-   
-    try {
-      const response = await AddDesignationApi(data, token)
-      if (response?.status === 200) {
-        setDesignationsValue('')
-        toast.success('Destination added successfully!')
-        navigate('/designationList')
-      } 
-    } catch (error) {
-      console.log('error', error);
-      toast.error('Failed to add destination. Please try again.')
-    }
+      designation_name: designationsValue,
+    };
 
-  }
+    try {
+      const response = await AddDesignationApi(data, token);
+      if (response?.status === 200) {
+        setDesignationsValue("");
+        toast.success("Destination added successfully!");
+        navigate("/designationList");
+      }
+    } catch (error) {
+      console.log("error", error);
+      toast.error("Failed to add destination. Please try again.");
+    }
+  };
 
   const handleCancel = () => {
-    setDesignationsValue('')
-  }
+    setDesignationsValue("");
+  };
 
   return (
-    <Box flex={1} overflow={'auto'}>
-      <Container sx={{
-        display: 'flex',
-        justifyContent: 'center',
-        marginTop: '30px'
-
-      }}>
+    <Box flex={1} overflow={"auto"}>
+      <Container
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "30px",
+        }}
+      >
         <Card
           sx={{
             width: 900,
@@ -64,10 +69,7 @@ const AddDesignation = () => {
               padding: 2,
             }}
           >
-            <Typography
-              variant="h6"
-              sx={{ fontWeight: "bold", }}
-            >
+            <Typography variant="h6" sx={{ fontWeight: "bold" }}>
               Add Designation
             </Typography>
           </Box>
@@ -79,10 +81,13 @@ const AddDesignation = () => {
               padding: 3,
             }}
           >
-            <form >
+            <form>
               {/* Input Field with Static Label */}
               <Box sx={{ marginBottom: 2 }}>
-                <label htmlFor="designation-name" style={{ fontWeight: "bold" }}>
+                <label
+                  htmlFor="designation-name"
+                  style={{ fontWeight: "bold" }}
+                >
                   Designation Name
                 </label>
                 <Box
@@ -143,7 +148,7 @@ const AddDesignation = () => {
         </Card>
       </Container>
     </Box>
-  )
-}
+  );
+};
 
-export default AddDesignation
+export default AddDesignation;

@@ -12,17 +12,21 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AddEmployeeApi } from "../config/baseUrl";
 import AddEmployeeForm from "../components/forms/AddEmployeeForm";
-import { toast } from 'react-toastify';
-
+import { toast } from "react-toastify";
 
 const AddEmployee = () => {
-  const { control, handleSubmit, reset, formState: { errors } } = useForm();
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const [fileDetails, setFileDetails] = useState<any>(null);
   const [pdfDetails, setPdfDetails] = useState<any>(null);
   const [loading, setLoading] = useState<boolean>(false); // Loader state
 
-  const { token } = useSelector((state: any) => state.auth)
-  const navigate = useNavigate()
+  const { token } = useSelector((state: any) => state.auth);
+  const navigate = useNavigate();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files ? e.target.files[0] : null;
@@ -50,29 +54,29 @@ const AddEmployee = () => {
       profile_pic,
       resume,
       address,
-      date_of_birth
+      date_of_birth,
     } = data;
 
     // Log file details
-    console.log('File details:', fileDetails);
+    console.log("File details:", fileDetails);
 
     const item = {
       first_name,
       last_name,
       mobile_number,
       email,
-      contract_period: '23',
-      total_salary: '233432',
+      contract_period: "23",
+      total_salary: "233432",
       gender,
       designation,
       status,
       resume,
       address,
       date_of_birth,
-      "monthly_payments[0][payment_date]": '2024-02-21',
-      "monthly_payments[0][amount_percentage]": '554',
-      "monthly_payments[0][remarks]": '88',
-      "monthly_payments[0][amount]": "5"
+      "monthly_payments[0][payment_date]": "2024-02-21",
+      "monthly_payments[0][amount_percentage]": "554",
+      "monthly_payments[0][remarks]": "88",
+      "monthly_payments[0][amount]": "5",
     };
 
     const formData = new FormData();
@@ -97,19 +101,18 @@ const AddEmployee = () => {
 
     try {
       const response = await AddEmployeeApi(formData, token);
-      console.log('response', response);
+      console.log("response", response);
 
       if (response?.status) {
-        navigate('/EmployeeList');
-        toast.success('Employee added successfully!')
+        navigate("/EmployeeList");
+        toast.success("Employee added successfully!");
         // reset();
       } else {
-        console.log('Response error:', response);
+        console.log("Response error:", response);
       }
     } catch (error) {
-      console.error('API call error:', error);
-      toast.error('Failed to add employee. Please try again.')
-
+      console.error("API call error:", error);
+      toast.error("Failed to add employee. Please try again.");
     } finally {
       setLoading(false); // Hide the loader after the request finishes
     }
@@ -123,7 +126,7 @@ const AddEmployee = () => {
     handleSubmit,
     reset,
     Controller,
-    errors
+    errors,
   };
 
   return (
@@ -151,11 +154,7 @@ const AddEmployee = () => {
               padding: 2,
             }}
           >
-            <Typography variant="h6" >
-              Add Employee
-            </Typography>
-
-            
+            <Typography variant="h6">Add Employee</Typography>
           </Box>
           <Divider />
 
