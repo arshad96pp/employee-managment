@@ -27,6 +27,8 @@ import { baseUrl } from "../config/baseUrl";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loader from "../components/Loader/Loader";
+import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
+
 
 // Fetch Designations API function
 const fetchDesignationData = async (token: string) => {
@@ -70,8 +72,8 @@ const DesignationList = () => {
   // Filter rows based on search query
   const filteredData = Array.isArray(data)
     ? data.filter((row: any) =>
-        row?.name?.toLowerCase()?.includes(searchQuery.toLowerCase())
-      )
+      row?.name?.toLowerCase()?.includes(searchQuery.toLowerCase())
+    )
     : [];
 
   // Extract paginated rows based on the current page and rowsPerPage
@@ -152,7 +154,7 @@ const DesignationList = () => {
         {error && <Alert severity="error">{(error as Error).message}</Alert>}
 
         {/* Designation Table */}
-        {!isLoading && data && (
+        {!isLoading && data?.length !== 0 ? (
           <>
             <TableContainer>
               <Table>
@@ -212,7 +214,13 @@ const DesignationList = () => {
               onRowsPerPageChange={handleChangeRowsPerPage}
             />
           </>
-        )}
+        ) : <Box sx={{ textAlign: 'center', marginTop: 2 }}>
+          <SentimentDissatisfiedIcon color="action" sx={{ fontSize: 40 }} />
+          <Typography variant="h6" align="center" sx={{ marginTop: 1 }}>
+            No data available
+          </Typography>
+        </Box>}
+
 
         {/* Delete Modal */}
         <Dialog open={isDeleteModalOpen} onClose={closeDeleteModal}>
@@ -234,7 +242,7 @@ const DesignationList = () => {
         </Dialog>
 
         {/* Edit Modal */}
-        <Dialog open={isEditModalOpen} onClose={closeEditModal} sx={{padding:7}}>
+        <Dialog open={isEditModalOpen} onClose={closeEditModal} sx={{ padding: 7 }}>
           <DialogTitle>Edit Designation</DialogTitle>
           <DialogContent>
             <MUITextField
